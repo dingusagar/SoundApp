@@ -143,9 +143,7 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
 
     @Override
     protected void onPause() {
-//        if (mNsdHelper != null) {
-//            mNsdHelper.stopDiscovery();
-//        }
+
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localDashReceiver);
         unregisterReceiver(wiFiDirectBroadcastReceiver);
         super.onPause();

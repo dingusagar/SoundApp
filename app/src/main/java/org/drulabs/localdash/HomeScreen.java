@@ -40,8 +40,7 @@ public class HomeScreen extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.et_home_player_name);
         tvPort = (TextView) findViewById(R.id.tv_port_info);
 
-        String userNameHint = getString(R.string.enter_name_hint) + "(default = " + Build
-                .MANUFACTURER + ")";
+        String userNameHint = getString(R.string.enter_name_hint) + "(default = " + Build.MANUFACTURER + ")";
         etUsername.setHint(userNameHint);
 
         checkWritePermission();
@@ -62,8 +61,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         DBAdapter.getInstance(HomeScreen.this).clearDatabase();
-        tvPort.setText(String.format(getString(R.string.port_info), ConnectionUtils.getPort
-                (HomeScreen.this)));
+        tvPort.setText(String.format(getString(R.string.port_info), ConnectionUtils.getPort(HomeScreen.this)));
     }
 
     private void printInterfaces() {
@@ -104,17 +102,6 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    public void startNSD(View v) {
-        if (Utility.isWifiConnected(HomeScreen.this)) {
-            saveUsername();
-            Intent nsdIntent = new Intent(HomeScreen.this, LocalDashNSD.class);
-            startActivity(nsdIntent);
-            finish();
-        } else {
-            NotificationToast.showToast(HomeScreen.this, getString(R.string
-                    .wifi_not_connected_error));
-        }
-    }
 
     public void startWiFiDirect(View v) {
         if (Utility.isWiFiEnabled(HomeScreen.this)) {
@@ -128,15 +115,4 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    public void startWiFiDirectServiceDiscovery(View v) {
-        if (Utility.isWiFiEnabled(HomeScreen.this)) {
-            saveUsername();
-            Intent wifiDirectServiceDiscoveryIntent = new Intent(HomeScreen.this, LocalDashWiFiP2PSD.class);
-            startActivity(wifiDirectServiceDiscoveryIntent);
-            finish();
-        } else {
-            NotificationToast.showToast(HomeScreen.this, getString(R.string
-                    .wifi_not_enabled_error));
-        }
-    }
 }
