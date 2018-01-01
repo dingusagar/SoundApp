@@ -82,9 +82,17 @@ public class DataHandler {
             case TransferConstants.CHAT_REQUEST_REJECTED:
                 processChatRequestResponse(false);
                 break;
+
+            case TransferConstants.MEDIA_PLAYER_COMMAND:
+                processMediaPlayerCommand();
+                break;
             default:
                 break;
         }
+    }
+
+    private void processMediaPlayerCommand() {
+
     }
 
     private void processChatRequestReceipt() {

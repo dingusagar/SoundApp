@@ -2,6 +2,7 @@ package org.drulabs.localdash.transfer;
 
 import org.drulabs.localdash.model.ChatDTO;
 import org.drulabs.localdash.model.DeviceDTO;
+import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 
 /**
  * Authored by KaushalD on 8/28/2016.
@@ -38,6 +39,14 @@ public class TransferModelGenerator {
                 TransferConstants.TYPE_RESPONSE,
                 chat.toString());
         return transferModel;
+    }
+
+    public static ITransferable generateMediaPlayerCommandTransferModel(MediaPlayerCommandDTO command){
+        TransferModel transferModel = new TransferModel(TransferConstants.MEDIA_PLAYER_COMMAND,
+                TransferConstants.TYPE_RESPONSE,
+                command.toString());
+        return transferModel;
+
     }
 
     public static ITransferable generateChatRequestModel(DeviceDTO device) {

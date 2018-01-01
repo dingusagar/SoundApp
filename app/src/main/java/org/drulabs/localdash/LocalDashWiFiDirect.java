@@ -35,6 +35,7 @@ import org.drulabs.localdash.utils.DialogUtils;
 import org.drulabs.localdash.utils.Utility;
 import org.drulabs.localdash.wifidirect.WiFiDirectBroadcastReceiver;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,6 +274,13 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
                     Uri imageUri = data.getData();
                     DataSender.sendFile(LocalDashWiFiDirect.this, selectedDevice.getIp(),
                             selectedDevice.getPort(), imageUri);
+
+//                    after sending the audio file ...open media player activity
+                    Intent intent = new Intent(this,MediaPlayerActivity.class);
+                    intent.putExtra(MediaPlayerActivity.KEY_MEDIA_FILE,new File(imageUri.getPath()));
+                    startActivity(intent);
+                    finish();
+
                 }
                 break;
             default:

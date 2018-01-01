@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import org.drulabs.localdash.MediaPlayerActivity;
 import org.drulabs.localdash.utils.Utility;
 
 import java.io.ByteArrayInputStream;
@@ -106,13 +107,22 @@ public class ConnectionListener extends Thread {
 
             Utility.copyFile(new ByteArrayInputStream(input), new FileOutputStream(f));
             //opening the received file. (if exists)
+//            if (f.exists() && f.length() > 0) {
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_VIEW);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.setDataAndType(Uri.parse("file://" + f.getAbsolutePath()), "audio/*");
+//                mContext.startActivity(intent);
+//            }
+
             if (f.exists() && f.length() > 0) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
+                Intent intent = new Intent(mContext , MediaPlayerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setDataAndType(Uri.parse("file://" + f.getAbsolutePath()), "audio/*");
+                intent.putExtra(MediaPlayerActivity.KEY_MEDIA_FILE,f);
                 mContext.startActivity(intent);
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

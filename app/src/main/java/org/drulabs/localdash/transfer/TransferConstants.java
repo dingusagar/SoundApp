@@ -14,6 +14,7 @@ public interface TransferConstants {
     int CHAT_REQUEST_SENT = 3011;
     int CHAT_REQUEST_ACCEPTED = 3012;
     int CHAT_REQUEST_REJECTED = 3013;
+    int MEDIA_PLAYER_COMMAND = 4000;
 
     String TYPE_REQUEST = "request";
     String TYPE_RESPONSE = "response";
