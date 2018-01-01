@@ -16,13 +16,13 @@ import org.drulabs.localdash.transfer.DataSender;
  */
 public class DialogUtils {
 
-    public static final int CODE_PICK_IMAGE = 21;
+    public static final int CODE_PICK_AUDIO= 21;
 
     public static AlertDialog getServiceSelectionDialog(final Activity activity, final DeviceDTO
             selectedDevice) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle(selectedDevice.getDeviceName());
-        String[] types = {"Share image", "Chat"};
+        String[] types = {"Share audio", "Chat"};
         alertDialog.setItems(types, new DialogInterface.OnClickListener() {
 
             @Override
@@ -31,9 +31,9 @@ public class DialogUtils {
                 dialog.dismiss();
                 switch (which) {
                     case 0:
-                        Intent imagePicker = new Intent(Intent.ACTION_PICK);
-                        imagePicker.setType("image/*");
-                        activity.startActivityForResult(imagePicker, CODE_PICK_IMAGE);
+                        Intent audioPicker = new Intent(Intent.ACTION_GET_CONTENT);
+                        audioPicker.setType("audio/*");
+                        activity.startActivityForResult(audioPicker, CODE_PICK_AUDIO);
                         break;
                     case 1:
                         DataSender.sendChatRequest(activity, selectedDevice.getIp

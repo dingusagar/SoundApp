@@ -268,7 +268,7 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case DialogUtils.CODE_PICK_IMAGE:
+            case DialogUtils.CODE_PICK_AUDIO:
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
                     DataSender.sendFile(LocalDashWiFiDirect.this, selectedDevice.getIp(),
