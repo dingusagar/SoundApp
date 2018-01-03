@@ -26,6 +26,9 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +62,24 @@ public class Utility {
             return false;
         }
         return true;
+    }
+
+    public static void copyFileAsync(final File src , final File dest){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputStream in = new FileInputStream(src);
+                    OutputStream out = new FileOutputStream(dest);
+                    copyFile(in,out);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
     }
 
     public static byte[] getInputStreamByteArray(InputStream input) {

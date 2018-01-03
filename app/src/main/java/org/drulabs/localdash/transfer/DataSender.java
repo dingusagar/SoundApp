@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import org.drulabs.localdash.model.ChatDTO;
 import org.drulabs.localdash.model.DeviceDTO;
+import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 import org.drulabs.localdash.utils.ConnectionUtils;
 import org.drulabs.localdash.utils.Utility;
 
@@ -113,6 +114,11 @@ public class DataSender {
 
     public static void sendChatInfo(Context context, String destIP, int destPort, ChatDTO chat) {
         ITransferable transferableData = TransferModelGenerator.generateChatTransferModel(chat);
+        sendData(context, destIP, destPort, transferableData);
+    }
+
+    public static void sendMediaPlayerCommandInfo(Context context, String destIP, int destPort, MediaPlayerCommandDTO commandDTO){
+        ITransferable transferableData = TransferModelGenerator.generateMediaPlayerCommandTransferModel(commandDTO);
         sendData(context, destIP, destPort, transferableData);
     }
 }

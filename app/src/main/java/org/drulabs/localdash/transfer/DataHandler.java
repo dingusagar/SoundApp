@@ -8,9 +8,11 @@ import android.util.Log;
 
 import org.drulabs.localdash.ChatActivity;
 import org.drulabs.localdash.LocalDashWiFiDirect;
+import org.drulabs.localdash.MediaPlayerActivity;
 import org.drulabs.localdash.db.DBAdapter;
 import org.drulabs.localdash.model.ChatDTO;
 import org.drulabs.localdash.model.DeviceDTO;
+import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 
 /**
  * Authored by KaushalD on 8/28/2016.
@@ -92,7 +94,12 @@ public class DataHandler {
     }
 
     private void processMediaPlayerCommand() {
-
+        String mediaJSON = data.getData();
+        MediaPlayerCommandDTO commandDTO = MediaPlayerCommandDTO.fromJSON(mediaJSON);
+        //Save in db if needed here
+        Intent mediaCommandReceivedIntent = new Intent(MediaPlayerActivity.ACTION_COMMAND_RECEIVED);
+        mediaCommandReceivedIntent.putExtra(MediaPlayerActivity.KEY_MEDIA_PLAYER_COMMAND_DATA, commandDTO);
+        broadcaster.sendBroadcast(mediaCommandReceivedIntent);
     }
 
     private void processChatRequestReceipt() {

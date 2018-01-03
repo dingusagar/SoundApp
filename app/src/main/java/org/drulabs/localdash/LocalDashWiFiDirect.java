@@ -14,6 +14,7 @@ import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
@@ -271,15 +272,17 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         switch (requestCode) {
             case DialogUtils.CODE_PICK_AUDIO:
                 if (resultCode == RESULT_OK) {
-                    Uri imageUri = data.getData();
+                    Uri fileUri = data.getData();
                     DataSender.sendFile(LocalDashWiFiDirect.this, selectedDevice.getIp(),
-                            selectedDevice.getPort(), imageUri);
+                            selectedDevice.getPort(), fileUri);
 
-//                    after sending the audio file ...open media player activity
-                    Intent intent = new Intent(this,MediaPlayerActivity.class);
-                    intent.putExtra(MediaPlayerActivity.KEY_MEDIA_FILE,new File(imageUri.getPath()));
-                    startActivity(intent);
-                    finish();
+                    NotificationToast.showToast(LocalDashWiFiDirect.this,"Sending file ... ");
+
+                    File oldfile = new File(fileUri.getPath());
+                    File copyfile = new File(Environment.getExternalStorageDirectory() + "/"
+                            + "/localdash/"+oldfile.getName());
+                    Utility.copyFileAsync(oldfile,copyfile);
+
 
                 }
                 break;
@@ -434,8 +437,8 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
 //    private void openChatActivity(DeviceDTO chatDevice) {
 //        Intent chatIntent = new Intent(LocalDashWiFiDirect.this, ChatActivity
 //                .class);
-//        chatIntent.putExtra(ChatActivity.KEY_CHAT_IP, chatDevice.getIp());
-//        chatIntent.putExtra(ChatActivity.KEY_CHAT_PORT, chatDevice.getPort());
+//        chatIntent.putExtra(ChatActivity.KEY_DEST_IP, chatDevice.getIp());
+//        chatIntent.putExtra(ChatActivity.KEY_DEST_PORT, chatDevice.getPort());
 //        chatIntent.putExtra(ChatActivity.KEY_CHATTING_WITH, chatDevice.getPlayerName());
 //        startActivity(chatIntent);
 //    }

@@ -10,14 +10,28 @@ import java.util.Date;
  */
 
 public class MediaPlayerCommandDTO implements Serializable{
-    private final String PLAY = "mediaplayer.play";
-    private final String PAUSE = "mediaplayer.pause";
-    private final String STOP = "mediaplayer.stop";
+    public final static String PLAY = "mediaplayer.play";
+    public final static String PAUSE = "mediaplayer.pause";
+    public final static String STOP = "mediaplayer.stop";
 
 
+    public MediaPlayerCommandDTO(String command) {
+        this.command = command;
+    }
 
     private String command;
-    private Date timeToExec;
+    private long timeToExec;
+    private String fileName;
+
+
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
 
 
@@ -29,11 +43,11 @@ public class MediaPlayerCommandDTO implements Serializable{
         this.command = command;
     }
 
-    public Date getTimeToExec() {
+    public long getTimeToExec() {
         return timeToExec;
     }
 
-    public void setTimeToExec(Date timeToExec) {
+    public void setTimeToExec(long timeToExec) {
         this.timeToExec = timeToExec;
     }
 

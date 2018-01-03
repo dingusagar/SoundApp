@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import org.drulabs.localdash.ChatActivity;
+import org.drulabs.localdash.MediaPlayerActivity;
 import org.drulabs.localdash.R;
 import org.drulabs.localdash.model.DeviceDTO;
 import org.drulabs.localdash.notification.NotificationToast;
 import org.drulabs.localdash.transfer.DataSender;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Authored by KaushalD on 9/2/2016.
@@ -22,7 +26,7 @@ public class DialogUtils {
             selectedDevice) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle(selectedDevice.getDeviceName());
-        String[] types = {"Share audio", "Chat"};
+        String[] types = {"Share audio", "Chat","Play Media"};
         alertDialog.setItems(types, new DialogInterface.OnClickListener() {
 
             @Override
@@ -41,6 +45,12 @@ public class DialogUtils {
                         NotificationToast.showToast(activity, "chat request " +
                                 "sent");
                         break;
+                    case 2:
+                        DataSender.sendChatRequest(activity, selectedDevice.getIp
+                                (), selectedDevice.getPort());
+                        NotificationToast.showToast(activity, "Media Play request " +
+                                "sent");
+
                 }
             }
 
@@ -87,11 +97,53 @@ public class DialogUtils {
         return (alertDialog.create());
     }
 
+//    public static void openChatActivity(Activity activity, DeviceDTO device) {
+//        Intent chatIntent = new Intent(activity, ChatActivity.class);
+//        chatIntent.putExtra(ChatActivity.KEY_CHAT_IP, device.getIp());
+//        chatIntent.putExtra(ChatActivity.KEY_CHAT_PORT, device.getPort());
+//        chatIntent.putExtra(ChatActivity.KEY_CHATTING_WITH, device.getPlayerName());
+//        activity.startActivity(chatIntent);
+//    }
+
     public static void openChatActivity(Activity activity, DeviceDTO device) {
-        Intent chatIntent = new Intent(activity, ChatActivity.class);
-        chatIntent.putExtra(ChatActivity.KEY_CHAT_IP, device.getIp());
-        chatIntent.putExtra(ChatActivity.KEY_CHAT_PORT, device.getPort());
-        chatIntent.putExtra(ChatActivity.KEY_CHATTING_WITH, device.getPlayerName());
-        activity.startActivity(chatIntent);
+        Intent mediaPlayerIntent = new Intent(activity, MediaPlayerActivity.class);
+        mediaPlayerIntent.putExtra(ChatActivity.KEY_CHAT_IP, device.getIp());
+        mediaPlayerIntent.putExtra(ChatActivity.KEY_CHAT_PORT, device.getPort());
+        mediaPlayerIntent.putExtra(ChatActivity.KEY_CHATTING_WITH, device.getPlayerName());
+        activity.startActivity(mediaPlayerIntent);
     }
+
+    public static AlertDialog chooseMediaFileDialog(final Activity activity, File dir) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+
+        alertDialog.setTitle("Select File to Play");
+        final File[] listofFiles = dir.listFiles();
+        String[] files = new String[listofFiles.length];
+        int k =0;
+
+        for(int i =0;i<listofFiles.length;i++)
+        {
+            files[k++] = listofFiles[i].getName();
+
+        }
+
+
+        alertDialog.setItems(files, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                if(listofFiles[which].isFile())
+                     ((MediaPlayerActivity)activity).setFileToPlay(listofFiles[which]);
+                else
+                    NotificationToast.showToast(activity,"Selected Item is not a valid file");
+
+            }
+
+        });
+
+        return (alertDialog.create());
+    }
+
 }

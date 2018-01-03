@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import org.drulabs.localdash.MediaPlayerActivity;
+import org.drulabs.localdash.notification.NotificationToast;
 import org.drulabs.localdash.utils.Utility;
 
 import java.io.ByteArrayInputStream;
@@ -95,14 +96,19 @@ public class ConnectionListener extends Thread {
             }
 
             //If control comes here that means the byte array sent is not the transfer object
-            // that was expected. Processing it as a file (JPEG)
-            final File f = new File(Environment.getExternalStorageDirectory() + "/"
-                    + "/localdash/" + System.currentTimeMillis() + ".mp3");
-
-            File dirs = new File(f.getParent());
-            if (!dirs.exists()) {
+            // that was expected. Processing it as a file
+            int filenumber = 1;
+            File dirs = new File(Environment.getExternalStorageDirectory() + "/"
+                    + "/localdash/");
+            if(dirs.exists())
+                filenumber = dirs.listFiles().length + 1;
+            else{
                 boolean dirsSuccess = dirs.mkdirs();
             }
+
+            final File f = new File(Environment.getExternalStorageDirectory() + "/"
+                    + "/localdash/" + filenumber + ".mp3");
+
             boolean fileCreationSuccess = f.createNewFile();
 
             Utility.copyFile(new ByteArrayInputStream(input), new FileOutputStream(f));
@@ -116,10 +122,7 @@ public class ConnectionListener extends Thread {
 //            }
 
             if (f.exists() && f.length() > 0) {
-                Intent intent = new Intent(mContext , MediaPlayerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(MediaPlayerActivity.KEY_MEDIA_FILE,f);
-                mContext.startActivity(intent);
+                NotificationToast.showToast(mContext,"Media file successfully received !!");
             }
 
 
