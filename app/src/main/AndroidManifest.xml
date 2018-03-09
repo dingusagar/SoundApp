@@ -39,17 +39,23 @@
             android:name=".LocalDashWiFiDirect"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChatActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".transfer.DataTransferService"
             android:enabled="true" />
 
-        <activity android:name=".MediaPlayerActivity"></activity>
+        <activity
+            android:name=".MediaPlayerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".temp.tempActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

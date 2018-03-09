@@ -26,7 +26,7 @@ public class DialogUtils {
             selectedDevice) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle(selectedDevice.getDeviceName());
-        String[] types = {"Share audio", "Chat","Play Media"};
+        String[] types = {"Share audio","Play Media"};
         alertDialog.setItems(types, new DialogInterface.OnClickListener() {
 
             @Override
@@ -40,12 +40,6 @@ public class DialogUtils {
                         activity.startActivityForResult(audioPicker, CODE_PICK_AUDIO);
                         break;
                     case 1:
-                        DataSender.sendChatRequest(activity, selectedDevice.getIp
-                                (), selectedDevice.getPort());
-                        NotificationToast.showToast(activity, "chat request " +
-                                "sent");
-                        break;
-                    case 2:
                         DataSender.sendChatRequest(activity, selectedDevice.getIp
                                 (), selectedDevice.getPort());
                         NotificationToast.showToast(activity, "Media Play request " +
@@ -77,7 +71,7 @@ public class DialogUtils {
                     //Request accepted
                     case 0:
                         openChatActivity(activity, requesterDevice);
-                        NotificationToast.showToast(activity, "Chat request " +
+                        NotificationToast.showToast(activity, "Media play request " +
                                 "accepted");
                         DataSender.sendChatResponse(activity, requesterDevice.getIp(),
                                 requesterDevice.getPort(), true);
@@ -86,7 +80,7 @@ public class DialogUtils {
                     case 1:
                         DataSender.sendChatResponse(activity, requesterDevice.getIp(),
                                 requesterDevice.getPort(), false);
-                        NotificationToast.showToast(activity, "Chat request " +
+                        NotificationToast.showToast(activity, "Media play request " +
                                 "rejected");
                         break;
                 }

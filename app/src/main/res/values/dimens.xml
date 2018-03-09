@@ -11,4 +11,9 @@
     <dimen name="text_big">25sp</dimen>
     <dimen name="text_reg">20sp</dimen>
     <dimen name="text_small">15sp</dimen>
+
+
+    <!-- Margins for full screen activity-->
+    <dimen name="text_view_margin">16dp</dimen>
+    <dimen name="end_text_margin">16dp</dimen>
 </resources>

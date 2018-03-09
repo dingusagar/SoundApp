@@ -1,8 +1,5 @@
 package org.drulabs.localdash.transfer;
 
-/**
- * Authored by KaushalD on 8/28/2016.
- */
 public interface TransferConstants {
 
     int INITIAL_DEFAULT_PORT = 8998;

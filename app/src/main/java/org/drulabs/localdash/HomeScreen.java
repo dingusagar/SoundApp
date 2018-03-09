@@ -6,10 +6,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.drulabs.localdash.db.DBAdapter;
@@ -32,19 +34,34 @@ public class HomeScreen extends AppCompatActivity {
 
     EditText etUsername;
     TextView tvPort;
+    RelativeLayout background;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+         actionBar = getSupportActionBar();
+        actionBar.hide();
+
         etUsername = (EditText) findViewById(R.id.et_home_player_name);
         tvPort = (TextView) findViewById(R.id.tv_port_info);
+        background = (RelativeLayout) findViewById(R.id.background_image);
+        background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startWiFiDirect(null);
+            }
+        });
 
         String userNameHint = getString(R.string.enter_name_hint) + "(default = " + Build.MANUFACTURER + ")";
         etUsername.setHint(userNameHint);
 
         checkWritePermission();
         printInterfaces();
+
+
+
     }
 
     @Override

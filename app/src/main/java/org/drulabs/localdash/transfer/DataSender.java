@@ -10,9 +10,7 @@ import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 import org.drulabs.localdash.utils.ConnectionUtils;
 import org.drulabs.localdash.utils.Utility;
 
-/**
- * Authored by KaushalD on 8/28/2016.
- */
+
 public class DataSender {
 
     public static void sendData(Context context, String destIP, int destPort, ITransferable data) {

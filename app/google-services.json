@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "248486053925",
+    "firebase_url": "https://soundapp-1ee67.firebaseio.com",
+    "project_id": "soundapp-1ee67",
+    "storage_bucket": "soundapp-1ee67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248486053925:android:5b438b145f898e57",
+        "android_client_info": {
+          "package_name": "org.drulabs.localdash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248486053925-e5m6h501o63j6qp6h4rrrgtetf8uj4tf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.drulabs.localdash",
+            "certificate_hash": "06fee18b9c319f8f059d36748f85f2230ba66085"
+          }
+        },
+        {
+          "client_id": "248486053925-2ls4mq21lgl1nlmdcco3rnf1osgler2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8PWWxClj_JXj_iEG-_we6QNWzuQpNuHs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248486053925-2ls4mq21lgl1nlmdcco3rnf1osgler2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

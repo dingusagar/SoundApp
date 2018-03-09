@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.skyfishjy.library.RippleBackground;
+
 import org.drulabs.localdash.db.DBAdapter;
 import org.drulabs.localdash.model.DeviceDTO;
 import org.drulabs.localdash.notification.NotificationToast;
@@ -33,6 +35,7 @@ import org.drulabs.localdash.transfer.DataSender;
 import org.drulabs.localdash.transfer.TransferConstants;
 import org.drulabs.localdash.utils.ConnectionUtils;
 import org.drulabs.localdash.utils.DialogUtils;
+import org.drulabs.localdash.utils.TimeSyncUtils;
 import org.drulabs.localdash.utils.Utility;
 import org.drulabs.localdash.wifidirect.WiFiDirectBroadcastReceiver;
 
@@ -51,6 +54,8 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
 
     PeerListFragment deviceListFragment;
     View progressBarLocalDash;
+
+    RippleBackground rippleBackground;
 
     WifiP2pManager wifiP2pManager;
     WifiP2pManager.Channel wifip2pChannel;
@@ -77,11 +82,12 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         setSupportActionBar(toolbar);
 
         initialize();
+
     }
 
     private void initialize() {
 
-        progressBarLocalDash = findViewById(R.id.progressBarLocalDash);
+//        progressBarLocalDash = findViewById(R.id.progressBarLocalDash);
 
         String myIP = Utility.getWiFiIPAddress(LocalDashWiFiDirect.this);
         Utility.saveString(LocalDashWiFiDirect.this, TransferConstants.KEY_MY_IP, myIP);
@@ -100,6 +106,11 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         appController.startConnectionListener(TransferConstants.INITIAL_DEFAULT_PORT);
 
         checkWritePermission();
+        rippleBackground = (RippleBackground) findViewById(R.id.content);
+        rippleBackground.startRippleAnimation();
+
+
+
     }
 
     @Override
@@ -118,6 +129,10 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.action_time_sync)
+        {
+            TimeSyncUtils.calculateClockSkewFromServer(this);
+            NotificationToast.showToast(this,"Syncing time from Firebase server..");
         }
 
         return super.onOptionsItemSelected(item);
@@ -224,7 +239,7 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
                             .getDeviceList();
                     int peerCount = (devices == null) ? 0 : devices.size();
                     if (peerCount > 0) {
-                        progressBarLocalDash.setVisibility(View.GONE);
+//                        progressBarLocalDash.setVisibility(View.GONE);
                         deviceListFragment = new PeerListFragment();
                         Bundle args = new Bundle();
                         args.putSerializable(PeerListFragment.ARG_DEVICE_LIST, devices);
@@ -348,7 +363,7 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
         }
 
 
-        progressBarLocalDash.setVisibility(View.GONE);
+//        progressBarLocalDash.setVisibility(View.GONE);
         deviceListFragment = new PeerListFragment();
         Bundle args = new Bundle();
         args.putSerializable(PeerListFragment.ARG_DEVICE_LIST, deviceDTOs);

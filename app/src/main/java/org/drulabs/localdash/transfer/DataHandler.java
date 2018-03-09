@@ -14,9 +14,6 @@ import org.drulabs.localdash.model.ChatDTO;
 import org.drulabs.localdash.model.DeviceDTO;
 import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 
-/**
- * Authored by KaushalD on 8/28/2016.
- */
 public class DataHandler {
 
     public static final String DEVICE_LIST_CHANGED = "device_list_updated";
