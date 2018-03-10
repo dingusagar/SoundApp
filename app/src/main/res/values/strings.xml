@@ -22,5 +22,6 @@
     <string name="skip_prev">skip to previous</string>
 
     <string name="background_image_str">Background image for album art</string>
+    <string name="timeSyncCheck">Check NTP</string>
 
 </resources>

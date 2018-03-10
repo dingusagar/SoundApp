@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,11 +19,13 @@ import org.drulabs.localdash.db.DBAdapter;
 import org.drulabs.localdash.notification.NotificationToast;
 import org.drulabs.localdash.transfer.TransferConstants;
 import org.drulabs.localdash.utils.ConnectionUtils;
+import org.drulabs.localdash.utils.TimeSyncUtils;
 import org.drulabs.localdash.utils.Utility;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -36,14 +39,17 @@ public class HomeScreen extends AppCompatActivity {
     TextView tvPort;
     RelativeLayout background;
     ActionBar actionBar;
+    Button syncTimeButton,checkSyncButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-         actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.hide();
 
+        syncTimeButton = (Button) findViewById(R.id.syncTimeButton);
+        checkSyncButton = (Button)findViewById(R.id.checkSyncButton);
         etUsername = (EditText) findViewById(R.id.et_home_player_name);
         tvPort = (TextView) findViewById(R.id.tv_port_info);
         background = (RelativeLayout) findViewById(R.id.background_image);
@@ -51,6 +57,24 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startWiFiDirect(null);
+            }
+        });
+
+        syncTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimeSyncUtils.initialise();
+                NotificationToast.showToast(getApplicationContext(),"Time syncing started!");
+            }
+        });
+
+        checkSyncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TimeSyncUtils.isInitialised())
+                    NotificationToast.showToast(getApplicationContext(),"Time syncing successful");
+                else
+                    NotificationToast.showToast(getApplicationContext(),"Device time not synced");
             }
         });
 

@@ -131,8 +131,15 @@ public class LocalDashWiFiDirect extends AppCompatActivity implements PeerListFr
             return true;
         }else if(id == R.id.action_time_sync)
         {
-            TimeSyncUtils.calculateClockSkewFromServer(this);
-            NotificationToast.showToast(this,"Syncing time from Firebase server..");
+            TimeSyncUtils.initialise();
+            NotificationToast.showToast(this,"Syncing time from NTP server..");
+        }else if (id == R.id.check_time_sync){
+            try{
+                TimeSyncUtils.getTrueTime();
+                NotificationToast.showToast(this,"Time sync successful");
+            }catch (Exception e){
+                NotificationToast.showToast(this,"Sync Not successfully complete");
+            }
         }
 
         return super.onOptionsItemSelected(item);

@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.instacart.library.truetime.TrueTime;
+
 import org.drulabs.localdash.model.MediaPlayerCommandDTO;
 import org.drulabs.localdash.notification.NotificationToast;
 import org.drulabs.localdash.transfer.DataSender;
@@ -70,7 +72,7 @@ public class MediaPlayerActivity extends AppCompatActivity {
         playPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playPauseButtonClick();
+                playPauseButtonClick(view);
             }
         });
 
@@ -86,6 +88,7 @@ public class MediaPlayerActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+
 
         progressBar = new ProgressBar(this);
 
@@ -135,21 +138,21 @@ public class MediaPlayerActivity extends AppCompatActivity {
         }
     };
 
-    private void playPauseButtonClick(){
+    private void playPauseButtonClick(View view){
         if(!isSongSelected()){
             NotificationToast.showToast(this,"Select a song first !");
             return;
         }
-        if(isPlaying)
+        if(isPlaying) // to pause
         {
             isPlaying = false;
             changeButtonUItoPause();
-            pauseButtonAction();
-        }else
+            ButtonAction(MediaPlayerCommandDTO.PAUSE);
+        }else // to play
         {
             isPlaying = true;
             changeButtonUItoPlay();
-            playButtonAction();
+            ButtonAction(MediaPlayerCommandDTO.PLAY);
 
         }
     }
@@ -176,26 +179,24 @@ public class MediaPlayerActivity extends AppCompatActivity {
     }
 
 
-    public void pauseButtonAction() {
-        MediaPlayerCommandDTO commandDTO = new MediaPlayerCommandDTO(MediaPlayerCommandDTO.PAUSE);
-        commandDTO.setTimeToExec(TimeSyncUtils.getOriginalSystemTimeNow() + EXECUTION_OFFSET);
+    public void ButtonAction(String action) {
+        MediaPlayerCommandDTO commandDTO = new MediaPlayerCommandDTO(action);
+        Date trueDate;
+        try{
+            trueDate = TimeSyncUtils.getTrueTime();
+        }catch (IllegalStateException e){
+            trueDate = new Date();
+            NotificationToast.showToast(getApplicationContext(),"Error in device times");
+        }
+        commandDTO.setTimeToExec(trueDate.getTime() + EXECUTION_OFFSET);
 
         DataSender.sendMediaPlayerCommandInfo(MediaPlayerActivity.this,destIP,destPort,commandDTO);
-        NotificationToast.showToast(this,"sending pause command ");
+        NotificationToast.showToast(this,"sending "+action+" command ");
 
         scheduleMediaPlayerTask(commandDTO);
     }
 
-    public void playButtonAction() {
 
-        MediaPlayerCommandDTO commandDTO = new MediaPlayerCommandDTO(MediaPlayerCommandDTO.PLAY);
-        commandDTO.setTimeToExec(TimeSyncUtils.getOriginalSystemTimeNow() + EXECUTION_OFFSET);
-
-        DataSender.sendMediaPlayerCommandInfo(MediaPlayerActivity.this,destIP,destPort,commandDTO);
-        NotificationToast.showToast(this,"sending play command ");
-        scheduleMediaPlayerTask(commandDTO);
-
-    }
 
     public void scheduleMediaPlayerTask(final MediaPlayerCommandDTO commandDTO){
         Runnable runnable = new Runnable() {
@@ -219,7 +220,14 @@ public class MediaPlayerActivity extends AppCompatActivity {
         };
 
         final Handler handler = new Handler();
-        long delay = abs(TimeSyncUtils.getOriginalSystemTimeNow() - commandDTO.getTimeToExec());
+        Date trueDate;
+        try{
+            trueDate = TimeSyncUtils.getTrueTime();
+        }catch (IllegalStateException e){
+            trueDate = new Date();
+            NotificationToast.showToast(getApplicationContext(),"Error in device times");
+        }
+        long delay = abs(trueDate.getTime() - commandDTO.getTimeToExec());
         handler.postDelayed(runnable,delay);
     }
 
@@ -257,7 +265,8 @@ public class MediaPlayerActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_time_sync) {
-            TimeSyncUtils.calculateClockSkewFromServer(this);
+            TimeSyncUtils.initialise();
+            NotificationToast.showToast(getApplicationContext(),"connecting to NTP server");
             return true;
         }
 
