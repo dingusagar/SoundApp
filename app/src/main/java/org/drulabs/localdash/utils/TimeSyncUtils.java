@@ -22,6 +22,7 @@ import java.util.Date;
  */
 
 public class TimeSyncUtils {
+    private static TrueTime trueTime;
 
     private static String timeServer = "time.apple.com";
 
