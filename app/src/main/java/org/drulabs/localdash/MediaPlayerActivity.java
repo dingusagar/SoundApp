@@ -268,6 +268,12 @@ public class MediaPlayerActivity extends AppCompatActivity {
             TimeSyncUtils.initialise();
             NotificationToast.showToast(getApplicationContext(),"connecting to NTP server");
             return true;
+        }else if (id == R.id.check_time_sync){
+            if(TimeSyncUtils.isInitialised()){
+                NotificationToast.showToast(getApplicationContext(),"Time sync was successful");
+            }else{
+                NotificationToast.showToast(getApplicationContext(),"Time sync failed");
+            }
         }
 
         return super.onOptionsItemSelected(item);
