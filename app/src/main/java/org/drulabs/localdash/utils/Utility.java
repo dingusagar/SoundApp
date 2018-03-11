@@ -43,9 +43,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-/**
- * Authored by KaushalD on 8/27/2016.
- */
+
 public class Utility {
 
     public static boolean copyFile(InputStream inputStream, OutputStream out) {

@@ -5,9 +5,7 @@ import android.app.Application;
 import org.drulabs.localdash.transfer.ConnectionListener;
 import org.drulabs.localdash.utils.ConnectionUtils;
 
-/**
- * Authored by KaushalD on 9/1/2016.
- */
+
 public class AppController extends Application {
 
     private ConnectionListener connListener;

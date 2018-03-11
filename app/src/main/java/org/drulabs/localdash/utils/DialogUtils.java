@@ -15,9 +15,7 @@ import org.drulabs.localdash.transfer.DataSender;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * Authored by KaushalD on 9/2/2016.
- */
+
 public class DialogUtils {
 
     public static final int CODE_PICK_AUDIO= 21;

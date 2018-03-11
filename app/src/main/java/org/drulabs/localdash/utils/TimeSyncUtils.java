@@ -17,9 +17,7 @@ import org.drulabs.localdash.notification.NotificationToast;
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * Created by dingu on 3/1/18.
- */
+
 
 public class TimeSyncUtils {
     private static TrueTime trueTime;

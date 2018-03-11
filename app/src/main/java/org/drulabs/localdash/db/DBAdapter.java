@@ -10,9 +10,7 @@ import org.drulabs.localdash.model.DeviceDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Authored by KaushalD on 8/27/2016.
- */
+
 public class DBAdapter {
 
     //TODO Cursors have not been closed. Please close it.
