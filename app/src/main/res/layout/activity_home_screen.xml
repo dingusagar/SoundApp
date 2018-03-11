@@ -71,18 +71,17 @@
         android:id="@+id/syncTimeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="104dp"
-        android:text="SyncTime" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Sync Time" />
 
     <Button
         android:id="@+id/checkSyncButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
-        android:layout_alignLeft="@+id/syncTimeButton"
-        android:layout_alignStart="@+id/syncTimeButton"
-        android:layout_marginBottom="34dp"
-        android:text="CheckSync" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text=" Check Sync" />
 </RelativeLayout>
