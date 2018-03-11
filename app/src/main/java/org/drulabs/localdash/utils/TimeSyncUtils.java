@@ -47,7 +47,7 @@ public class TimeSyncUtils {
         protected Void doInBackground(Void... params) {
             try {
                 TrueTime.build()
-                        //.withSharedPreferences(SampleActivity.this)
+//                        .withSharedPreferences(SampleActivity.this)
                         .withNtpHost(timeServer)
                         .withLoggingEnabled(false)
                         .withConnectionTimeout(3_1428)
